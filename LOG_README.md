@@ -29,7 +29,7 @@ Init a vector using `std::vector` and then go through (for loop) all the ranges 
 **7-8.**
 When passing a node in the .launch file, pay attention to the type, this is the name of the file within the package we want to launch.
 
-**9**
+**9.**
 Before calling a package remember to build it.
 
 After setting the first time the configuration in RViz, we can set it as default config by typing `ctrl+s`. This way next time we start RViz everything will be environment will be ready.
