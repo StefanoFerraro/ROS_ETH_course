@@ -1,4 +1,4 @@
 husky:
  topic_name: /scan
  queue_size: 5
-  
+ gain: 0.2 

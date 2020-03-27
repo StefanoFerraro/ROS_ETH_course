@@ -4,6 +4,13 @@ This a log file for the introductory course of ROS, held at ETH, RSL department.
 
 The aim of this repo is to demonstrate what I have learned during this course, giving also the possibility to share my solutions with other students.
 
+## General Tips
+
+. A package can have multiple nodes inside, when creating a new node (main.. init ..ecc.) pay attention to add an executable to `CMakeList.txt` following this template `add_executable("node name" "executable file")` and `target_link_libraries("node name" ${catkin_LIBRARIES})`.
+
+. When subscribing to a new topic, we just need to choose a new topic name, the topic will be generated automatically.
+
+
 ## [Exercise 2](https://ethz.ch/content/dam/ethz/special-interest/mavt/robotics-n-intelligent-systems/rsl-dam/ROS2020/Exercise%20Session%202.pdf)
 
 **1.** 
@@ -34,3 +41,17 @@ Before calling a package remember to build it.
 
 After setting the first time the configuration in RViz, we can set it as default config by typing `ctrl+s`. This way next time we start RViz everything will be environment will be ready.
 
+## [Exercise 3](https://ethz.ch/content/dam/ethz/special-interest/mavt/robotics-n-intelligent-systems/rsl-dam/ROS2020/Exercise%20Session%203.pdf)
+
+**1.**
+Insert an `arg` parameter to to link directly to the name of the desired world file.
+
+**3-4.**
+Create a new publisher in the main program, with the type of message we want to send and the topic where we want to publish. After that in the callback function we have compute the angular position of the pillar with respect to husky. We combine Min Distance and Pillar Angle to create a P controller that increase velocity and steers. Finally we add the computed values to the Twist message, before publishing it.
+
+**7.**
+When computing a transformation with tf, put it inside a try statement, otherwise at the startup, when not all the tf are loaded, a fatal error will occur.
+
+When trasforming using `transformPoint` it is important to assign the frame_id to the point that needs to be converted. 
+
+In the terminal type `rosrun tf view_frames` for generating a .pdf file with the mapping of the all the coordinate systems.
