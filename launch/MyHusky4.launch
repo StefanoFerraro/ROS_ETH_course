@@ -1,0 +1,31 @@
+<launch>
+
+	<!-- Robot description -->
+	<arg name="laser_enabled" default="$(optenv HUSKY_LMS1XX_ENABLED false)"/>
+	<arg name="kinect_enabled" default="$(optenv HUSKY_KINECT_ENABLED false)"/>
+	<arg name="urdf_extras" default="$(optenv HUSKY_URDF_EXTRAS)"/>
+
+	<include file="$(find husky_description)/launch/description.launch" >
+        	<arg name="laser_enabled" default="$(arg laser_enabled)"/>
+        	<arg name="kinect_enabled" default="$(arg kinect_enabled)"/>
+        	<arg name="urdf_extras" default="$(arg urdf_extras)"/>
+	</include> 
+
+	<!-- Spawn controllers -->
+  	<node name="base_controller_spawner" pkg="controller_manager" type="spawner"
+        args="husky_joint_publisher husky_velocity_controller"/>
+
+
+	<param name="use_sim_time" value="true"/>
+	
+	<!-- EKF localization -->
+	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+		<rosparam command="load" file="$(find husky_control)/config/localization.yaml"/>
+	</node> 
+	
+	<!-- Robot state publisher -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+	
+	<node name="rviz" pkg="rviz" type="rviz"/>
+
+</launch>
