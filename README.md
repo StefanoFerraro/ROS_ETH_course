@@ -6,6 +6,8 @@ The aim of this repo is to demonstrate what I have learned during this course, g
 
 ## General Tips
 
+. Naming convention for the package: it should start with a lower case.
+
 . A package can have multiple nodes inside, when creating a new node (main.. init ..ecc.) pay attention to add an executable to `CMakeList.txt` following this template `add_executable("node name" "executable file")` and `target_link_libraries("node name" ${catkin_LIBRARIES})`.
 
 . When subscribing to a new topic, we just need to choose a new topic name, the topic will be generated automatically.
@@ -55,3 +57,19 @@ When computing a transformation with tf, put it inside a try statement, otherwis
 When trasforming using `transformPoint` it is important to assign the frame_id to the point that needs to be converted. 
 
 In the terminal type `rosrun tf view_frames` for generating a .pdf file with the mapping of the all the coordinate systems.
+
+## [Exercise 4](https://ethz.ch/content/dam/ethz/special-interest/mavt/robotics-n-intelligent-systems/rsl-dam/ROS2020/Exercise%20Session%204.pdf)
+
+**2.**
+Before installing `rqt_multiplot` we need to install the required pre-requisites.
+
+**4.**
+After checking the subscription/publication of the bag file, we need to add to the launch file all the nodes required to have the same configuration, check in the reference project `husky_control/launch` file `control.launch`` which nodes have been launched.
+
+**5.**
+Normally, the ROS client libraries will use your computer's system clock as a time source, also known as the "wall-clock" or "wall-time" (like the clock on the wall of your lab). When you are running a simulation or playing back logged data, however, it is often desirable to instead have the system use a simulated clock so that you can have accelerated, slowed, or stepped control over your system's perceived time. For example, if you are playing back sensor data into your system, you may wish to have your time correspond to the timestamps of the sensor data. In the .launch file set `<param name="use_sim_time" value="true"/>`.
+
+When calling the bag file, remember to set the option `--clock` to send the bag-s clock data to the `/clock` topic.
+
+**6.**
+When calling the node `robot_state_publisher` first we need to call the `robot_description` from the parameter server. This can be found in the `husky_description` package (`optenv` substitute the value of a environment variable if set)
