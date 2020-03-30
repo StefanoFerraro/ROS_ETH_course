@@ -8,9 +8,9 @@ The aim of this repo is to demonstrate what I have learned during this course, g
 
 . Naming convention for the package: it should start with a lower case.
 
-. A reference '&' is added when we want to just reference to the variable address, without creating a new variable (occuping more memory), when I have a reference I can modify directly the source variable.
+. A reference `&` is added when we want to just reference to the variable address, without creating a new variable (occuping more memory), when I have a reference I can modify directly the source variable.
 
-. A common usage of 'const' is to guard against accidentally changing a variable, especially when it is passed-by-reference as a function argument. For this reason we have: 'void function(const std::vector<int> &v)
+. A common usage of `const` is to guard against accidentally changing a variable, especially when it is passed-by-reference as a function argument. For this reason we have: `void function(const std::vector<int> &v)`
 
 . A package can have multiple nodes inside, when creating a new node (main.. init ..ecc.) pay attention to add an executable to `CMakeList.txt` following this template `add_executable("node name" "executable file")` and `target_link_libraries("node name" ${catkin_LIBRARIES})`.
 
