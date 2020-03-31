@@ -14,15 +14,29 @@ namespace my_hushy_controller
     nodeHandle_.getParam("husky/topic_name", topic);
     nodeHandle_.getParam("husky/queue_size", queue_size);
     nodeHandle_.getParam("husky/gain", K);
+    Start_Stop_Sub = nodeHandle_.subscribe("/start_stop", 1, &Controller::Start_StopCallback, this );
     Scan_Sub = nodeHandle_.subscribe(topic, queue_size, &Controller::ScanCallback, this ); // & before a function is used as a pointer to the address of the function
     // this is a object instance for which we want the callback function called.
     Twist_Pub = nodeHandle_.advertise<geometry_msgs::Twist>("/cmd_vel", queue_size);
     Marker_Pub = nodeHandle_.advertise<visualization_msgs::Marker>("visualization_marker", 0);
+
   }
 
 
   Controller::~Controller()
   {
+  }
+
+  void Controller::Start_StopCallback(const std_msgs::Bool& start_stop_data)
+  {
+    if(start_stop_data.data == true)
+    {
+      Start_Stop_data = true;
+    }
+    else
+    {
+      Start_Stop_data = false;
+    }
   }
 
   void Controller::ScanCallback(const sensor_msgs::LaserScan::ConstPtr& scan_data) // `::` notation is used we need to access the a static variable or a method of a class/struct/namespace
@@ -48,10 +62,20 @@ namespace my_hushy_controller
     ROS_INFO_STREAM_THROTTLE(1, "Angle Pillar: " << PillarAngle);
 
     // Computation for the P controller
+
     Linear_vel = K*Min_distance + 1;
     Angular_vel = -K*(PillarAngle);
-    Twist.linear.x = Linear_vel;
-    Twist.angular.z = Angular_vel;
+
+    if(Start_Stop_data == false)
+    {
+      Twist.linear.x = Linear_vel;
+      Twist.angular.z = Angular_vel;
+    }
+    else
+    {
+      Twist.linear.x = 0.0;
+      Twist.angular.z = 0.0;
+    }
 
     Twist_Pub.publish(Twist); // Publishing the velocity message
 

@@ -13,6 +13,8 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   visualization_msgs
   tf
+  std_srvs
+  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -107,7 +109,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 INCLUDE_DIRS include
 LIBRARIES husky_highlevel_controller TFlistener_node
-CATKIN_DEPENDS roscpp sensor_msgs geometry_msgs visualization_msgs tf
+CATKIN_DEPENDS roscpp sensor_msgs geometry_msgs visualization_msgs tf std_srvs std_msgs
 #  DEPENDS system_lib
 )
 
@@ -135,7 +137,9 @@ include_directories(include ${catkin_INCLUDE_DIRS}
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME} src/${PROJECT_NAME}_node.cpp src/Controller.cpp)
 
-# add_executable(TFlistener_node src/TFlistener_node.cpp)
+add_executable(Start_Stop_server src/Start_Stop_server.cpp)
+
+add_executable(Start_Stop_client src/Start_Stop_client.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -153,9 +157,13 @@ target_link_libraries(${PROJECT_NAME}
    ${catkin_LIBRARIES}
 )
 
-#target_link_libraries(TFlistener_node
-#   ${catkin_LIBRARIES}
-#)
+target_link_libraries(Start_Stop_server
+   ${catkin_LIBRARIES}
+)
+
+target_link_libraries(Start_Stop_client
+   ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##

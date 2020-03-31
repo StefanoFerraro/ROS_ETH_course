@@ -72,4 +72,20 @@ Normally, the ROS client libraries will use your computer's system clock as a ti
 When calling the bag file, remember to set the option `--clock` to send the bag-s clock data to the `/clock` topic.
 
 **6.**
-When calling the node `robot_state_publisher` first we need to call the `robot_description` from the parameter server. This can be found in the `husky_description` package (`optenv` substitute the value of a environment variable if set)
+When calling the node `robot_state_publisher` first we need to call the `robot_description` from the parameter server. This can be found in the `husky_description` package (`optenv` substitute the value of a environment variable if set).
+
+## [Exercise 5](https://ethz.ch/content/dam/ethz/special-interest/mavt/robotics-n-intelligent-systems/rsl-dam/ROS2020/Exercise%20Session%205.pdf)
+
+**1.** 
+We create a .cpp file with a server in it, this server has a type msg of `std_srvs`, and communicate using bools (request, response). 
+
+In the callback function of the service, we send a response for received request and we publish in a topic passing a variable (bool) for starting/stopping the motion.
+
+Once the server node is running, we use the command `rosservice call "service_name" "request value"` for passing the request variable.
+
+**B.**
+Analysing the imu data, I noticed a significan bump in the acceleration in the z coordinate when hitting the pillar.
+
+For implementing this point we need to create a service client. We subscribe to the `imu/data` topic, type `sensor_msgs/Imu.h`. Once the acceleration is higher than a fixed threshold, we send a call for the service implemented in point 1.
+
+Before launching remember to add server and client to the launch file (two distinct nodes), and to the Cmake file as executable.   

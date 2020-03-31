@@ -12,7 +12,8 @@
 #include <geometry_msgs/PointStamped.h>
 #include <visualization_msgs/Marker.h>
 #include <tf/transform_listener.h>
-
+#include <std_srvs/SetBool.h>
+#include <std_msgs/Bool.h>
 
 using std::string;
 using std::vector;
@@ -36,6 +37,7 @@ namespace my_hushy_controller
     ros::Publisher Twist_Pub;
     ros::Publisher Marker_Pub;
     tf::TransformListener listener;
+    ros::Subscriber Start_Stop_Sub;
 
     string topic;
     int queue_size;
@@ -48,6 +50,7 @@ namespace my_hushy_controller
     float PillarAngle;
     float Linear_vel;
     float Angular_vel;
+    bool Start_Stop_data;
 
     geometry_msgs::Twist Twist;
     geometry_msgs::PointStamped PointLF;
@@ -56,6 +59,7 @@ namespace my_hushy_controller
 
     void ScanCallback(const sensor_msgs::LaserScan::ConstPtr& scan_data); //& used as a reference for passing large data structure without allocation extra memory
     void PillarMarker();
+    void Start_StopCallback(const std_msgs::Bool& start_stop_data);
   };
 
 }
