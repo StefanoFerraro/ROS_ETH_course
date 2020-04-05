@@ -12,7 +12,7 @@ The aim of this repo is to demonstrate what I have learned during this course, g
 
 . A common usage of `const` is to guard against accidentally changing a variable, especially when it is passed-by-reference as a function argument. For this reason we have: `void function(const std::vector<int> &v)`
 
-. A package can have multiple nodes inside, when creating a new node (main.. init ..ecc.) pay attention to add an executable to `CMakeList.txt` following this template `add_executable("node name" "executable file")` and `target_link_libraries("node name" ${catkin_LIBRARIES})`.
+. A package can have multiple nodes inside, when creating a new node (main.. init ..ecc.) pay attention to add an executable to `CMakeList.txt` following this template `add_executable("executable name" "executable files source")` and `target_link_libraries("node name" ${catkin_LIBRARIES})`.
 
 . When subscribing to a new topic, we just need to choose a new topic name, the topic will be generated automatically.
 
